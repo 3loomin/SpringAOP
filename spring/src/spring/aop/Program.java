@@ -1,5 +1,10 @@
 package spring.aop;
 
+import java.awt.event.InvocationEvent;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 import spring.aop.entity.Exam;
 import spring.aop.entity.NewExam;
 
@@ -8,8 +13,30 @@ public class Program {
 	public static void main(String[] args) {
 		Exam exam = new NewExam(1,1,1,1);
 		
-		
-		System.out.printf("total is %d",exam.total());
+		Exam proxy= (Exam)Proxy.newProxyInstance(NewExam.class.getClassLoader(),
+				new Class[] { Exam.class},
+				new InvocationHandler() {
+					
+					@Override
+					public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+						
+						long start = System.currentTimeMillis();
+						
+						Object result = method.invoke(exam, args);
+						
+						
+						
+						long end = System.currentTimeMillis();
+						String message = (end-start) + "ms가 걸렸습니다.";
+						System.out.println(message);
+						
+						
+						return result;
+					}
+				});
+	
+		System.out.printf("total is %d\n",proxy.total());
+		System.out.printf("avg is %f\n", proxy.avg());
 
 	}
 

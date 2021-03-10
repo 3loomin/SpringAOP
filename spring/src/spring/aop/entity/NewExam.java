@@ -28,7 +28,8 @@ public class NewExam implements Exam {
 
 	@Override
 	public int total() {
-		long start = System.currentTimeMillis();
+		
+		//long start = System.currentTimeMillis();
 		
 		int result = kor+eng+math+com;
 		
@@ -39,9 +40,9 @@ public class NewExam implements Exam {
 			e.printStackTrace();
 		}
 		
-		long end = System.currentTimeMillis();
-		String message = (end-start) + "ms가 걸렸습니다.";
-		System.out.println(message);
+		//long end = System.currentTimeMillis();
+		//String message = (end-start) + "ms가 걸렸습니다.";
+		//System.out.println(message);
 		return result;
 	}
 
